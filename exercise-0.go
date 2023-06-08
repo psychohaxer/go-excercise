@@ -1,98 +1,96 @@
 package main
 
 import (
-	"bufio"		// Library bufio digunakan untuk membaca input dari pengguna
-	"fmt"		// Library fmt digunakan untuk mencetak pesan ke layar 
-	"os"		// Library os digunakan untuk membaca input dari pengguna
-	"strconv"   // Library strconv digunakan untuk konversi tipe data
-	"strings"   // Library strings digunakan untuk memanipulasi string
+	"bufio"     // The bufio library is used to read input from the user
+	"fmt"       // The fmt library is used to print messages to the screen
+	"os"        // The os library is used to read input from the user
+	"strconv"   // The strconv library is used for data type conversion
+	"strings"   // The strings library is used to manipulate strings
 )
 
-// Memeriksa apakah sebuah bilangan bulat merupakan bilangan palindrom
-func cekPalindrom(num int) bool {
-	// Konversi bilangan bulat menjadi string
+// Check if an integer is a palindrome number
+func isPalindrome(num int) bool {
+	// Convert the integer to a string
 	str := strconv.Itoa(num)
 	length := len(str)
 
-	// Perulangan dilakukan dari indeks awal 0 hingga setengah panjang bilangan 
-	// (dibulatkan ke bawah jika panjang bilangan ganjil).
+	// Loop from index 0 to half the length of the number
+	// (rounded down if the length is odd).
 	for i := 0; i < length/2; i++ {
-
-		// Seleksi kondisi digunakan untuk membandingkan digit yang berada di posisi i dengan 
-		// digit yang berada di posisi yang berlawanan (posisi length-1-i). Jika digit tidak sama, 
-		// itu berarti bilangan tidak palindrom.
+		// Condition check to compare the digit at position i with
+		// the digit at the opposite position (position length-1-i).
+		// If the digits are not the same, it means the number is not a palindrome.
 		if str[i] != str[length-1-i] {
-
-			// Jika ditemukan digit yang tidak sama, fungsi langsung mengembalikan nilai false, 
-			// menandakan bahwa bilangan tersebut bukan bilangan palindrom.
+			// If a different digit is found, the function immediately returns false,
+			// indicating that the number is not a palindrome.
 			return false
 		}
 	}
 	return true
 }
 
-// Menghitung jumlah bilangan palindrom antara dua bilangan bulat
-func hitungPalindrom(start, end int) int {
+// Count the number of palindrome numbers between two integers
+func countPalindromes(start, end int) int {
 	count := 0
 
 	for num := start; num <= end; num++ {
-		if cekPalindrom(num) {
+		if isPalindrome(num) {
 			count++
 		}
 	}
 	return count
 }
 
-// Fungsi main
+// Main function
 func main() {
-	// Membaca input dari pengguna
+	// Read input from the user
 	scanner := bufio.NewScanner(os.Stdin)
-	fmt.Println("Masukkan angka dalam format 'angka1 angka2':")
+	fmt.Println("Enter numbers in the format 'number1 number2':")
 
-	// Perulangan dilakukan selama pengguna memasukkan input
+	// Loop until the user enters an empty line
 	for scanner.Scan() {
-		// Memeriksa apakah pengguna memasukkan baris kosong
+		// Check if the user entered a blank line
 		line := scanner.Text()
 		if line == "" {
 			break
 		}
 
-		// Memisahkan input menjadi dua angka
+		// Split the input into two numbers
 		input := strings.Split(line, " ")
 
-		// Periksa apakah input valid
-		// Jika input tidak terdiri dari dua angka, maka input tidak valid
+		// Check if the input is valid
+		// If the input does not consist of two numbers, then it is invalid
 		if len(input) != 2 {
-			fmt.Println("Format input tidak valid. Mohon masukkan dua angka dipisahkan oleh satu spasi.")
+			fmt.Println("Invalid input format. Please enter two numbers separated by a space.")
 			continue
 		}
 
-		// Konversi ke integer
+		// Convert to integers
 		start, err1 := strconv.Atoi(input[0])
 		end, err2 := strconv.Atoi(input[1])
 
-		// Periksa apakah input valid
-		// Jika terjadi kesalahan saat konversi, maka err1 atau err2 akan berisi nilai yang tidak nil
+		// Check if the input is valid
+		// If there is an error during conversion, err1 or err2 will contain a non-nil value
 		if err1 != nil || err2 != nil {
-			fmt.Println("Format input tidak valid. Mohon masukkan dua angka yang valid.")
+			fmt.Println("Invalid input format. Please enter two valid numbers.")
 			continue
 		}
 
-		// Periksa apakah input valid
-		// Jika angka pertama < 1 atau angka kedua > 10^9 atau angka kedua <= angka pertama, maka input tidak valid
+		// Check if the input is valid
+		// If the first number < 1 or the second number > 10^9 or the second number <= the first number, then it is invalid
 		if start < 1 || end > 1e9 || start >= end {
-			fmt.Println("Batas angka tidak valid. Pastikan angka pertama >= 1 dan angka kedua <= 10^9 dan angka kedua > angka pertama.")
+			fmt.Println("Invalid number range. Make sure the first number >= 1, the second number <= 10^9, and the second number > the first number.")
 			continue
 		}
 
-		// Hitung jumlah bilangan palindrom
-		count := hitungPalindrom(start, end)
+		// Count the number of palindrome numbers
+		count := countPalindromes(start, end)
 		fmt.Println(count)
 	}
 
-	// Periksa apakah terjadi kesalahan saat membaca input
+	// Check if there was an error while reading the input
 	if err := scanner.Err(); err != nil {
-		fmt.Println("Terjadi kesalahan dalam membaca input:", err)
+		fmt.Println("An error occurred while reading the input:", err)
 	}
 
 }
