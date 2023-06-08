@@ -1,113 +1,100 @@
 package main
 
 import (
-	"bufio"
-	"fmt"
-	"os"
-	"strings"
-	// "sort"
-	"strconv"
+	"bufio"     // The bufio library is used to read input from the user
+	"fmt"       // The fmt library is used to print messages to the screen
+	"os"        // The os library is used to read input from the user
+	"strconv"   // The strconv library is used for data type conversion
+	"strings"   // The strings library is used to manipulate strings
 )
 
-// Buku adalah tipe data yang menyimpan informasi buku
-type Buku struct {
-	Kategori string
-	Judul    string
-	Ukuran   int
+// Book is a data type that stores book information
+type Book struct {
+	Category string
+	Title    string
+	Size     int
 }
 
-// indeksKategori adalah kategori buku dengan urutan sesuai dengan indeks
-var indeksKategori = []string{"6", "7", "0", "9", "4", "8", "1", "2", "5", "3"}
+// indexCategory is the book category in the order according to the index
+var indexCategory = []string{"6", "7", "0", "9", "4", "8", "1", "2", "5", "3"}
 
-// parseInput mengonversi notasi buku menjadi objek buku
-func parseInput(input string) Buku {
+// parseInput converts the book notation into a book object
+func parseInput(input string) Book {
 	tokens := strings.Split(input, "")
-	kategori := tokens[0]
-	judul := tokens[1]
-	ukuranArray := tokens[2:4]
-	ukuranStr := strings.Join(ukuranArray, "")
+	category := tokens[0]
+	title := tokens[1]
+	sizeArray := tokens[2:4]
+	sizeStr := strings.Join(sizeArray, "")
 
-	// konversi ukuran ke int
-	ukuran, _ := strconv.Atoi(ukuranStr)
-	return Buku{kategori, judul, ukuran}
+	// Convert size to int
+	size, _ := strconv.Atoi(sizeStr)
+	return Book{category, title, size}
 }
 
 func main(){
-	// menyimpan input
-	input, inputan := "", ""
-	var inputanArr []string
+	// Store input
+	input, inputLine := "", ""
+	var inputLineArr []string
 	
-	// menyimpan objek buku
-	var bukuUnsorted []Buku
-	var bukuSorted []Buku
+	// Store book objects
+	var booksUnsorted []Book
+	var booksSorted []Book
 
-	// membuat scanner
+	// Create scanner
 	scanner := bufio.NewScanner(os.Stdin)
 	
-	// menerima input
-	fmt.Println("Masukkan input:")
+	// Receive input
+	fmt.Println("Enter input:")
 	for scanner.Scan() {
 		input = scanner.Text()
 
-		// berhenti jika input kosong
+		// Stop if input is empty
 		if input == "" {
 			break
 		}
 
-		inputan += input
+		inputLine += input
 	}
 
-	inputanArr = strings.Split(inputan, " ")
+	inputLineArr = strings.Split(inputLine, " ")
 
-	// fmt.Println("inputan:", inputan)
-	// fmt.Println("inputanArr:", inputanArr)
-
-	// perulangan untuk setiap inputanArr
-	for _, notasi := range inputanArr {
-		buku := parseInput(notasi)
-		bukuUnsorted = append(bukuUnsorted, buku)
+	// Loop for each inputLineArr
+	for _, notation := range inputLineArr {
+		book := parseInput(notation)
+		booksUnsorted = append(booksUnsorted, book)
 	}
 
-	fmt.Println("uns:", bukuUnsorted)
+	fmt.Println("Unsorted:", booksUnsorted)
 	
-	// Urutkan bukuUnsorted berdasarkan Ukuran
-	for i := 0; i < len(bukuUnsorted); i++ {
-		for j := i + 1; j < len(bukuUnsorted); j++ {
-			if bukuUnsorted[i].Ukuran > bukuUnsorted[j].Ukuran {
-				bukuUnsorted[i], bukuUnsorted[j] = bukuUnsorted[j], bukuUnsorted[i]
+	// Sort booksUnsorted based on Size
+	for i := 0; i < len(booksUnsorted); i++ {
+		for j := i + 1; j < len(booksUnsorted); j++ {
+			if booksUnsorted[i].Size > booksUnsorted[j].Size {
+				booksUnsorted[i], booksUnsorted[j] = booksUnsorted[j], booksUnsorted[i]
 			}
 		}
 	}
 
-	// Balik urutan bukuUnsorted
-	for i := 0; i < len(bukuUnsorted)/2; i++ {
-		j := len(bukuUnsorted) - i - 1
-		bukuUnsorted[i], bukuUnsorted[j] = bukuUnsorted[j], bukuUnsorted[i]
+	// Reverse the order of booksUnsorted
+	for i := 0; i < len(booksUnsorted)/2; i++ {
+		j := len(booksUnsorted) - i - 1
+		booksUnsorted[i], booksUnsorted[j] = booksUnsorted[j], booksUnsorted[i]
 	}
 
+	// Loop for each indexCategory
+	for _, category := range indexCategory {
 
-	// Balik urutan indeksKategori
-	// for i := 0; i < len(indeksKategori)/2; i++ {
-	// 	j := len(indeksKategori) - i - 1
-	// 	indeksKategori[i], indeksKategori[j] = indeksKategori[j], indeksKategori[i]
-	// }
-
-	// 3A13 5X19 9Y20 2C18 1N20 3N20 1M21 1F14 9A21 3N21 0E13 5G14 8A23 9E22 3N14
-
-	// perulangan untuk setiap indeksKategori
-	for _, kategori := range indeksKategori {
-
-		// perulangan untuk setiap bukuUnsorted
-		for _, buku := range bukuUnsorted {
+		// Loop for each book in booksUnsorted
+		for _, book := range booksUnsorted {
 		
-			// jika kategori sama dengan kategori buku
-			if kategori == buku.Kategori {
-				// masukkan Buku ke bukuSorted
-				bukuSorted = append(bukuSorted, buku)
+			// If the category is the same as the book category
+			if category == book.Category {
+				// Add the Book to booksSorted
+				booksSorted = append(booksSorted, book)
 			}
 		}
 	}
 
-	fmt.Println("srt:", bukuSorted)
+	fmt.Println("Sorted:", booksSorted)
 	
 }
