@@ -4,15 +4,15 @@ import (
 	"testing" // Package testing provides support for automated testing of Go packages with the testing framework.
 )
 
-func TestCheckPalindrome(t *testing.T) {
+func TestIsPalindrome(t *testing.T) {
 	// Test case with a palindrome number
-	if !CheckPalindrome(121) {
-		t.Errorf("CheckPalindrome(121) = false, want true")
+	if !IsPalindrome(121) {
+		t.Errorf("IsPalindrome(121) = false, want true")
 	}
 
 	// Test case with a non-palindrome number
-	if CheckPalindrome(123) {
-		t.Errorf("CheckPalindrome(123) = true, want false")
+	if IsPalindrome(123) {
+		t.Errorf("IsPalindrome(123) = true, want false")
 	}
 }
 
@@ -39,8 +39,8 @@ func TestCountPalindromes(t *testing.T) {
 	}
 
 	// Test case with range 1 to 100, there should be 18 palindrome numbers
-	count := CountPalindromes(1, 100)
-	expected := 18
+	count = CountPalindromes(1, 100)
+	expected = 18
 	if count != expected {
 		t.Errorf("CountPalindromes(1, 100) = %d, want %d", count, expected)
 	}
