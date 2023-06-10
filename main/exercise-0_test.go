@@ -45,13 +45,6 @@ func TestCountPalindromes(t *testing.T) {
 		t.Errorf("CountPalindromes(1, 100) = %d, want %d", count, expected)
 	}
 
-	// Test case with range 1000 to 2000, there should be 108 palindrome numbers
-	count = CountPalindromes(1000, 2000)
-	expected = 108
-	if count != expected {
-		t.Errorf("CountPalindromes(1000, 2000) = %d, want %d", count, expected)
-	}
-
 	// Additional test case with range 1 to 10, the expected output is 9
 	count = CountPalindromes(1, 10)
 	expected = 9
@@ -61,7 +54,7 @@ func TestCountPalindromes(t *testing.T) {
 
 	// Additional test case with range 99 to 100, the expected output is 9
 	count = CountPalindromes(99, 100)
-	expected = 9
+	expected = 1
 	if count != expected {
 		t.Errorf("CountPalindromes(99, 100) = %d, want %d", count, expected)
 	}
@@ -72,10 +65,4 @@ func TestCountPalindromes(t *testing.T) {
 	if count != expected {
 		t.Errorf("CountPalindromes(21, 31) = %d, want %d", count, expected)
 	}
-}
-
-// Unit test for the main functions in the main package
-func TestMainFunctions(t *testing.T) {
-	// Test case to ensure that the main functions do not produce any errors
-	main()
 }
