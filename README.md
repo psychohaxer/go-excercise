@@ -4,9 +4,9 @@ This repository contains several exercises in Go programming language for learni
 
 ## Files
 
-1. `exercise-1.go`: Contains the implementation for detecting and counting palindromic numbers. Status: Done
-2. `exercise-2.go`: Contains the implementation for sorting objects with a specific data structure. Status: Done
-3. `exercise-3.go`: Contains the implementation for finding the missing number from a string. Status: Work in Progress
+1. `exercise-0.go`: Contains the implementation for detecting and counting palindromic numbers. Status: Done
+2. `exercise-1.go`: Contains the implementation for sorting objects with a specific data structure. Status: Done
+3. `exercise-2.go`: Contains the implementation for finding the missing number from a string. Status: Work in Progress
 
 Each file has its own unit tests to verify its functionality.
 
