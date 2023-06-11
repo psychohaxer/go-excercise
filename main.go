@@ -6,19 +6,19 @@ import (
 	"net/http"
 )
 
-// BookRequest represents the JSON request body for sorting books
-type BookRequest struct {
+// SortBooksRequest represents the JSON request body for sorting books
+type SortBooksRequest struct {
 	Input string `json:"input"`
 }
 
-// BookResponse represents the JSON response body for sorted books
-type BookResponse struct {
+// SortBooksResponse represents the JSON response body for sorted books
+type SortBooksResponse struct {
 	SortedBooks string `json:"sorted_books"`
 }
 
 func sortBooksHandler(w http.ResponseWriter, r *http.Request) {
 	// Parse JSON request
-	var req BookRequest
+	var req SortBooksRequest
 	err := json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
 		http.Error(w, "Invalid JSON", http.StatusBadRequest)
@@ -29,7 +29,7 @@ func sortBooksHandler(w http.ResponseWriter, r *http.Request) {
 	sortedBooks := SortTheBooks(req.Input)
 
 	// Create JSON response
-	res := BookResponse{
+	res := SortBooksResponse{
 		SortedBooks: sortedBooks,
 	}
 
@@ -52,6 +52,6 @@ func main() {
 	http.HandleFunc("/sort-books", sortBooksHandler)
 
 	// Start the web server
-	log.Println("Server started on http://localhost:8088")
-	log.Fatal(http.ListenAndServe(":8088", nil))
+	log.Println("Server started on http://localhost:8080")
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
